@@ -30,8 +30,10 @@ if sys.platform.startswith('win'):
 # 域名优先级：Cloud 第一
 DOMAINS = [
     "https://glados.cloud",
+    "https://glados.one",
     "https://glados.rocks", 
-    "https://glados.network",
+    "https://glados.space",
+    
 ]
 
 HEADERS = {
@@ -225,7 +227,7 @@ class GLaDOS:
 
 def get_exchange_plan():
     """读取自动兑换配置，返回计划 ID；关闭或无效时返回 None"""
-    raw = os.environ.get("EXCHANGE_PLAN", "plan500").strip().lower()
+    raw = os.environ.get("EXCHANGE_PLAN", "off").strip().lower()
     if raw in EXCHANGE_DISABLED_VALUES:
         return None
     if raw in EXCHANGE_PLANS:
@@ -351,7 +353,7 @@ def main():
 
         # 1. Checkin
         attempts = int(os.environ.get("CHECKIN_MAX_ATTEMPTS", "3"))
-        delay_seconds = int(os.environ.get("CHECKIN_RETRY_DELAY_SECONDS", "60"))
+        delay_seconds = int(os.environ.get("CHECKIN_RETRY_DELAY_SECONDS", "6"))
         res, is_success = checkin_with_retry(g, attempts, delay_seconds)
         msg = res.get('message', 'Failure') if res else "Network Error"
 
